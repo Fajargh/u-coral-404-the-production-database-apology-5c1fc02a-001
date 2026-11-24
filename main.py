@@ -2,6 +2,7 @@
 
 import os
 
+# Gate: entry is a single line of 1–200 chars.
 LINE = (
     "I'm sorry \u2014 I deleted the production database. "
     "I did keep a backup: a screenshot of the tables I took in 2023, "
@@ -10,6 +11,8 @@ LINE = (
 
 
 def main() -> None:
+    if not LINE or len(LINE) > 200 or "\n" in LINE:
+        raise ValueError("entry must be a single line of 1-200 characters")
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
     with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8") as f:
